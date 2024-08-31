@@ -8,7 +8,7 @@ import CustomButton from "../../components/CustomButton";
 
 const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
-  const [form, setform] = useState({
+  const [form, setForm] = useState({
     email: "",
     password: "",
   });
@@ -16,7 +16,7 @@ const SignIn = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full flex justify-center h-full px-4 my-6">
+        <View className="w-full flex justify-center min-h-[80vh] px-4 my-6">
           <Image
             source={images.logo}
             resizeMode="contain"

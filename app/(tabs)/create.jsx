@@ -4,7 +4,7 @@ import React from "react";
 const Create = () => {
   return (
     <View>
-      <Text>Create</Text>
+      <Text className="text-2xl font-bold">Create</Text>
     </View>
   );
 };

@@ -5,7 +5,7 @@ const Home = () => {
 
   return (
     <View>
-      <Text>Homes</Text>
+      <Text className="text-2xl font-bold">Homes</Text>
     </View>
 
   );

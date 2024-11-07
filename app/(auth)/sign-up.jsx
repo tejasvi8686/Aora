@@ -1,5 +1,5 @@
-import { ScrollView, View, Image, Text, Alert } from "react-native";
 import React, { useState } from "react";
+import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
@@ -8,36 +8,46 @@ import CustomButton from "../../components/CustomButton";
 import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
   });
+  const [user, setUser] = useState(null); // State to store the created user
+  const [isLogged, setIsLogged] = useState(false); // State for login status
   const router = useRouter();
 
   const submit = async () => {
-    if (form.username === "" || form.email === "" || form.password === "") {
-      Alert.alert("Error", "Please fill all the fields");
-      return;
+    if (!form.username || !form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all fields");
+      return; // Add return to prevent further execution if fields are empty
     }
 
-    setIsSubmitting(true);
+    setSubmitting(true);
 
     try {
       const result = await createUser(form.email, form.password, form.username);
+      setUser(result);
+      setIsLogged(true);
+
       router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full flex justify-center min-h-[80vh] px-4 my-6">
+        <View
+          className="w-full flex justify-center h-full px-4 my-6"
+          style={{
+            minHeight: Dimensions.get("window").height - 100,
+          }}
+        >
           <Image
             source={images.logo}
             resizeMode="contain"
